@@ -1,32 +1,32 @@
 /**
   * ENSICAEN
-  * 6, boulevard du Maréchal Juin
+  * 6, boulevard du MarÃ©chal Juin
   * 14050 Caen Cedex
   *
   * This file is owned by ENSICAEN students
   * No portion of this document may be reproduced, copied or revised without written permission of the authors
   *
-  * */
+  */
 
   /**
   * @file position.c
   *
-  * Fichier d'en-tête du type abstrait Positions
+  * Fichier d'en-tÃªte du type abstrait Positions
   *
-  * */
+  */
 
-#ifndef POSITION_H_INCLUDED
-#define POSITION_H_INCLUDED
+#ifndef POSITION_H
+#define POSITION_H
 
 /**
   * @struct position
   *
-  * La structure implémentant une position
+  * La structure implÃ©mentant une position
   *
   * @var L'abscisse
-  * @var L'ordonnée
+  * @var L'ordonnÃ©e
   *
-  * */
+  */
 
 typedef struct position
 {
@@ -37,12 +37,12 @@ typedef struct position
 /**
   * @struct element_position
   *
-  * L'élément d'une liste simplement chainée de positions
+  * L'Ã©lÃ©ment d'une liste simplement chainÃ©e de positions
   *
   * @var La position
-  * @var Un pointeur sur l'élement suivant
+  * @var Un pointeur sur l'Ã©lement suivant
   *
-  * */
+  */
 
 typedef struct element_position
 {
@@ -53,13 +53,13 @@ typedef struct element_position
 /**
   * @struct ensemble_position
   *
-  * Une structure permettant de gérer une liste simplement chainée de positions
+  * Une structure permettant de gÃ©rer une liste simplement chainÃ©e de positions
   *
   * @var La taille de la liste
-  * @var Un pointeur sur la tête de la liste
-  * @var Un pointeur sur l'élément courant de la liste
+  * @var Un pointeur sur la tÃªte de la liste
+  * @var Un pointeur sur l'Ã©lÃ©ment courant de la liste
   *
-  * */
+  */
 
 typedef struct ensemble_positions
 {

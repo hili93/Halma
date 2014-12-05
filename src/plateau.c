@@ -1,19 +1,19 @@
 /**
   * ENSICAEN
-  * 6, boulevard du Maréchal Juin
+  * 6, boulevard du MarÃ©chal Juin
   * 14050 Caen Cedex
   *
   * This file is owned by ENSICAEN students
   * No portion of this document may be reproduced, copied or revised without written permission of the authors
   *
-  * */
+  */
 
   /**
   * @file plateau.c
   *
-  * Fonctions utiles à la gestion du plateau de jeu
+  * Fonctions utiles Ã  la gestion du plateau de jeu
   *
-  * */
+  */
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -21,14 +21,14 @@
 #include "../includes/plateau.h"
 
 /**
-  * Fonction récursive intermédiaire utile à la détermination de chaines
+  * Fonction rÃ©cursive intermÃ©diaire utile Ã  la dÃ©termination de chaines
   *
   * @param Le plateau courant
-  * @param La chaine à déterminer entièrement
+  * @param La chaine Ã  dÃ©terminer entiÃ¨rement
   * @param L'abscisse de la position de laquelle partir
-  * @param L'ordonée de la position de laquelle partir
+  * @param L'ordonÃ©e de la position de laquelle partir
   *
-  * */
+  */
 
 void chaine_ajouter_pions_adjacents(Plateau plateau, Chaine chaine, int x, int y);
 
@@ -42,7 +42,7 @@ Plateau plateau_creer(int taille)
 
     plateau->couleur = malloc(taille*taille*sizeof(Couleur));
 
-    for (i = 0; i < taille*taille; i++)
+    for (i = 0; i < taille*taille; ++i)
         plateau->couleur[i] = VIDE;
 
     return plateau;
@@ -70,11 +70,8 @@ Chaine plateau_determiner_chaine(Plateau plateau, Position pos)
         return NULL;
 
     Chaine chaine = chaine_creer(plateau_get(plateau, pos.x, pos.y));
-
     chaine_ajouter(pos, chaine);
-
     chaine_ajouter_pions_adjacents(plateau, chaine, pos.x, pos.y);
-
     return chaine;
 }
 
@@ -83,8 +80,8 @@ void chaine_ajouter_pions_adjacents(Plateau plateau, Chaine chaine, int x, int y
     int i, j;
     Position position;
 
-    for (j = y-1; j <= y+1; j++)
-        for (i = x-1; i <= x+1; i++)
+    for (j = y-1; j <= y+1; ++j)
+        for (i = x-1; i <= x+1; ++i)
             if (i >= 0 && j >= 0 && i < plateau->taille && j < plateau->taille && (i+j == x+y+1 || i+j == x+y-1))
             {
                 position.x = i;
@@ -93,7 +90,6 @@ void chaine_ajouter_pions_adjacents(Plateau plateau, Chaine chaine, int x, int y
                 if (plateau_get(plateau, i, j) == chaine->couleur && !chaine_appartient(position, chaine))
                 {
                     chaine_ajouter(position, chaine);
-
                     chaine_ajouter_pions_adjacents(plateau, chaine, i, j);
                 }
             }
@@ -119,7 +115,7 @@ int plateau_est_identique(Plateau plateau1, Plateau plateau2)
 
         for (i = 0; i < plateau1->taille*plateau1->taille; i++)
             if (plateau1->couleur[i] == plateau2->couleur[i])
-                k++;
+                ++k;
 
         if (k == plateau1->taille*plateau1->taille)
             return 1;
@@ -134,7 +130,7 @@ int plateau_copie(Plateau from, Plateau to)
 
     if (from->taille == to->taille)
     {
-        for (i = 0; i < to->taille*to->taille; i++)
+        for (i = 0; i < to->taille*to->taille; ++i)
             to->couleur[i] = from->couleur[i];
 
         if (plateau_est_identique(from, to))
@@ -156,8 +152,8 @@ Chaines plateau_entoure_un_territoire(Territoire territoire, Plateau plateau)
 
     do
     {
-        for (j = territoire_courant(territoire)->position.y-1; j <= territoire_courant(territoire)->position.y+1; j++)
-            for (i = territoire_courant(territoire)->position.x-1; i <= territoire_courant(territoire)->position.x+1; i++)
+        for (j = territoire_courant(territoire)->position.y-1; j <= territoire_courant(territoire)->position.y+1; ++j)
+            for (i = territoire_courant(territoire)->position.x-1; i <= territoire_courant(territoire)->position.x+1; ++i)
                 if (i >= 0 && j >= 0 && i < plateau->taille && j < plateau->taille && (i+j == territoire_courant(territoire)->position.x+territoire_courant(territoire)->position.y+1 || i+j == territoire_courant(territoire)->position.x+territoire_courant(territoire)->position.y-1))
                     if (plateau_get(plateau, i, j) != VIDE)
                     {
@@ -182,7 +178,7 @@ int plateau_sauvegarde(Plateau plateau, FILE* fichier)
     {
         fprintf(fichier, "%d\n", plateau->taille);
 
-        for (i = 0; i < plateau->taille*plateau->taille; i++)
+        for (i = 0; i < plateau->taille*plateau->taille; ++i)
             fprintf(fichier, "%d\n", plateau->couleur[i]);
 
         return 1;
@@ -201,7 +197,7 @@ Plateau plateau_chargement(FILE* fichier)
 
         Plateau plateau = plateau_creer(taille);
 
-        for (i = 0; i < taille*taille; i++)
+        for (i = 0; i < taille*taille; ++i)
             fscanf(fichier, "%d\n", &plateau->couleur[i]);
 
         return plateau;

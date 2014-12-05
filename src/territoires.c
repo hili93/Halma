@@ -1,19 +1,19 @@
 /**
   * ENSICAEN
-  * 6, boulevard du Maréchal Juin
+  * 6, boulevard du MarÃ©chal Juin
   * 14050 Caen Cedex
   *
   * This file is owned by ENSICAEN students
   * No portion of this document may be reproduced, copied or revised without written permission of the authors
   *
-  * */
+  */
 
   /**
   * @file plateau.c
   *
-  * Fonctions utiles à la gestion des ensembles de territoires
+  * Fonctions utiles Ã  la gestion des ensembles de territoires
   *
-  * */
+  */
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -42,9 +42,7 @@ void territoires_detruire(Territoires liste)
         do
         {
             tmp = territoires_courant(liste)->suivant;
-
             free(territoires_courant(liste));
-
             liste->courant = tmp;
         } while (tmp != NULL);
     }
@@ -54,10 +52,7 @@ void territoires_detruire(Territoires liste)
 
 int territoires_vide(Territoires liste)
 {
-    if (liste->tete == NULL)
-        return 1;
-
-    return 0;
+    return liste->tete == NULL;
 }
 
 void territoires_ajouter(Territoire territoire, Territoires liste)
@@ -91,10 +86,7 @@ int territoires_appartient(Territoire territoire, Territoires liste)
 
     while (!(territoire_est_identique(territoires_courant(liste)->territoire, territoire)) && territoires_suivant(liste)) {}
 
-    if (territoire_est_identique(territoires_courant(liste)->territoire, territoire))
-        return 1;
-
-    return 0;
+    return territoire_est_identique(territoires_courant(liste)->territoire, territoire);
 }
 
 void territoires_tete(Territoires liste)
@@ -120,8 +112,5 @@ int territoires_suivant(Territoires liste)
 
 element_territoire* territoires_courant(Territoires liste)
 {
-    if (!territoires_vide(liste))
-        return liste->courant;
-
-    return NULL;
+    return territoires_vide(liste) : NULL : liste->courant;
 }

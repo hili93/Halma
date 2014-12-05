@@ -1,34 +1,34 @@
 /**
   * ENSICAEN
-  * 6, boulevard du Maréchal Juin
+  * 6, boulevard du MarÃ©chal Juin
   * 14050 Caen Cedex
   *
   * This file is owned by ENSICAEN students
   * No portion of this document may be reproduced, copied or revised without written permission of the authors
   *
-  * */
+  */
 
   /**
   * @file chaines.c
   *
-  * Fichier d'en-tête du type abstrait Chaines
+  * Fichier d'en-tÃªte du type abstrait Chaines
   *
-  * */
+  */
 
-#ifndef CHAINES_H_INCLUDED
-#define CHAINES_H_INCLUDED
+#ifndef CHAINES_H
+#define CHAINES_H
 
 #include "chaine.h"
 
 /**
   * @struct element_chaine
   *
-  * L'élément d'une liste simplement chainée de chaines
+  * L'Ã©lÃ©ment d'une liste simplement chainÃ©e de chaines
   *
   * @var Une chaine
-  * @var Un pointeur sur l'élément suivant
+  * @var Un pointeur sur l'Ã©lÃ©ment suivant
   *
-  * */
+  */
 
 typedef struct element_chaine
 {
@@ -39,13 +39,13 @@ typedef struct element_chaine
 /**
   * @struct ensemble_chaines
   *
-  * La structure permettant de gérer une liste simplement chainée de chaines
+  * La structure permettant de gÃ©rer une liste simplement chainÃ©e de chaines
   *
   * @var La taille de la liste
-  * @var Un pointeur sur la tête de la liste
-  * @var Un pointeur sur l'élément courant de la liste
+  * @var Un pointeur sur la tÃªte de la liste
+  * @var Un pointeur sur l'Ã©lÃ©ment courant de la liste
   *
-  * */
+  */
 
 typedef struct ensemble_chaines
 {
@@ -59,85 +59,85 @@ typedef struct ensemble_chaines
   *
   * Chaines est un pointeur sur ensemble_chaines
   *
-  * */
+  */
 
 typedef ensemble_chaines* Chaines;
 
 /**
-  * Création et intialisation d'une liste simplement chainée de chaines
+  * CrÃ©ation et intialisation d'une liste simplement chainÃ©e de chaines
   *
-  * @return La liste correctement allouée
+  * @return La liste correctement allouÃ©e
   *
-  * */
+  */
 
 Chaines chaines_creer();
 
 /**
   * Destruction d'une liste de chaines
   *
-  * @param La liste à détruire
+  * @param La liste Ã  dÃ©truire
   *
-  * */
+  */
 
 void chaines_detruire(Chaines liste);
 
 /**
   * Teste si une liste de chaines est vide
   *
-  * @param La liste à tester
+  * @param La liste Ã  tester
   * @return 1 si la liste est vide, 0 si elle ne l'est pas
   *
-  * */
+  */
 
 int chaines_vide(Chaines liste);
 
 /**
-  * Ajoute une chaine à une liste de chaines
+  * Ajoute une chaine Ã  une liste de chaines
   *
-  * @param La chaine à ajouter
-  * @param La liste à laquelle on veut ajouter une chaine
+  * @param La chaine Ã  ajouter
+  * @param La liste Ã  laquelle on veut ajouter une chaine
   *
-  * */
+  */
 
 void chaines_ajouter(Chaine chaine, Chaines liste);
 
 /**
-  * Teste si une chaine appartient à une liste de chaines
+  * Teste si une chaine appartient Ã  une liste de chaines
   *
-  * @param La chaine à tester
-  * @param La liste à tester
-  * @return 1 si la chaine appartient à la liste, 0 sinon
+  * @param La chaine Ã  tester
+  * @param La liste Ã  tester
+  * @return 1 si la chaine appartient Ã  la liste, 0 sinon
   *
-  * */
+  */
 
 int chaines_appartient(Chaine chaine, Chaines liste);
 
 /**
-  * Se placer en tête d'une liste de chaines
+  * Se placer en tÃªte d'une liste de chaines
   *
-  * @param La liste à traiter
+  * @param La liste Ã  traiter
   *
-  * */
+  */
 
 void chaines_tete(Chaines liste);
 
 /**
-  * Passer à l'élément suivant d'une liste de chaines
+  * Passer Ã  l'Ã©lÃ©ment suivant d'une liste de chaines
   *
-  * @param La liste à traiter
+  * @param La liste Ã  traiter
   * @return 1 s'il y'a bien un suivant, 0 sinon
   *
-  * */
+  */
 
 int chaines_suivant(Chaines liste);
 
 /**
-  * L'élément courant d'une liste de chaines
+  * L'Ã©lÃ©ment courant d'une liste de chaines
   *
-  * @param La liste à traiter
-  * @return Un pointeur sur l'élément courant de la liste
+  * @param La liste Ã  traiter
+  * @return Un pointeur sur l'Ã©lÃ©ment courant de la liste
   *
-  * */
+  */
 
 element_chaine* chaines_courant(Chaines liste);
 

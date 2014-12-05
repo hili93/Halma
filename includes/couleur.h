@@ -1,45 +1,45 @@
 /**
   * ENSICAEN
-  * 6, boulevard du Maréchal Juin
+  * 6, boulevard du MarÃ©chal Juin
   * 14050 Caen Cedex
   *
   * This file is owned by ENSICAEN students
   * No portion of this document may be reproduced, copied or revised without written permission of the authors
   *
-  * */
+  */
 
   /**
   * @file couleur.c
   *
-  * Fichier d'en-tête du type abstrait Couleur
+  * Fichier d'en-tÃªte du type abstrait Couleur
   *
-  * */
+  */
 
-#ifndef COULEUR_H_INCLUDED
-#define COULEUR_H_INCLUDED
+#ifndef COULEUR_H
+#define COULEUR_H
 
 #include "position.h"
 
 /**
   * @enum Couleur
   *
-  * Une couleur peut être noire, blanche ou vide
+  * Une couleur peut Ãªtre noire, blanche ou vide
   *
-  * */
+  */
 
 typedef enum couleur {VIDE, ROUGE, BLEU, JAUNE, VERT, MARQUEUR} Couleur;
 
 /**
   * @struct ensemble_colore
   *
-  * Une structure incluant une couleur permettant de gérer une liste simplement chainée de positions
+  * Une structure incluant une couleur permettant de gÃ©rer une liste simplement chainÃ©e de positions
   *
   * @var La taille de la liste
-  * @var Un pointeur sur la tête de la liste
-  * @var Un pointeur sur l'élément courant de la liste
+  * @var Un pointeur sur la tÃªte de la liste
+  * @var Un pointeur sur l'Ã©lÃ©ment courant de la liste
   * @var La couleur de la liste
   *
-  * */
+  */
 
 typedef struct ensemble_colore
 {
