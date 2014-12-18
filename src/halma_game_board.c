@@ -16,6 +16,7 @@
 
 bool halma_game_board_fill_for_new_party(halma_game_board* board, const halma_game_players* players)
 {
+	printf("Menu:\n \tn or next : To move.\n\tnew       : To start a new game.\n\tq or quit : To excit the game.\n\tp or print: To display the game board.\n");
   if(!tab_2d_char_is_init(board) || !halma_game_players_is_init(players) ||
      board->nb_lines != 16 || board->nb_columns != 16 ||
      players->nb < 2 || players->nb > 4)
@@ -43,7 +44,7 @@ bool halma_game_board_fill_for_new_party(halma_game_board* board, const halma_ga
 	  tab_2d_char_fill_part_of_line_with_char(board, 15, 11, 5, players->tab[1].char_pawn);
 	}
     }
-  else if(players->nb > 3)
+  else if(players->nb > 2)
     {
       /* Top left corner */
       tab_2d_char_fill_part_of_line_with_char(board, 0, 0, 4, players->tab[0].char_pawn);

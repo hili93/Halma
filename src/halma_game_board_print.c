@@ -25,6 +25,7 @@
 void halma_game_print_stream_without_grid(const tab_2d_char* tab_2d,const halma_game_players* players, FILE * stream)
 {
   system("clear");
+	printf("--------------------------------------------------\n\t\t\tMenu:\n--------------------------------------------------\n\tn or next : To move.\n\tnew       : To start a new game.\n\tq or quit : To excit the game.\n\tp or print: To display the game board.\n--------------------------------------------------\n");
   if(tab_2d != NULL && tab_2d->tab != NULL)
     {
       for(size_t line=0, column; line < tab_2d->nb_lines; ++line)
@@ -43,7 +44,7 @@ void halma_game_print_stream_without_grid(const tab_2d_char* tab_2d,const halma_
 		couleur(stream,"34");
 		fputc(tab_2d_char_get_element_value_unsafe(tab_2d, line, column), stream);
 		couleur(stream,"0");
-	      }else if(tab_2d_char_get_element_value_unsafe(tab_2d, line, column) == players->tab[3].char_pawn){	
+	      }else if(players->nb !=3 && tab_2d_char_get_element_value_unsafe(tab_2d, line, column) == players->tab[3].char_pawn){	
 		couleur(stream,"35");
 		fputc(tab_2d_char_get_element_value_unsafe(tab_2d, line, column), stream);
 		couleur(stream,"0");
