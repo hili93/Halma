@@ -20,33 +20,29 @@
  */
 
 
-#ifndef HALMA_GAME_MOVE_H
-#define HALMA_GAME_MOVE_H
+#ifndef HALMA_GAME_BOARD_PRINT_H
+#define HALMA_GAME_BOARD_PRINT_H
 
 
-#include "position_2d_uint_pair.h"
-#include "halma_game_essential.h"
-
-
-#define HALMA_GAME_MOVE_POSSIBLE          0x11
-#define HALMA_GAME_MOVE_IMPOSSIBLE_FIRST  0x10
-#define HALMA_GAME_MOVE_IMPOSSIBLE_SECOND 0x01
-#define HALMA_GAME_MOVE_IMPOSSIBLE_BOTH   0X00
+#include <stdio.h>
+#include "tab_2d_char_essential.h"
+#include "halma_game_players.h"
 
 
 /**
- * A move in Halma game.
- */
-typedef position_2d_uint_pair halma_game_move;
-
-
-/**
- * Return HALMA_GAME_POSSIBLE_MOVE if a move is possible, otherwise a macro HALMA_GAME_MOVE_IMPOSSIBLE_*.
+ * Print a Halma game board not in a grid to a stream.
+ * @param stream A stream
+ * @param players A table of Halma game players
  * @param tab_2d A pointer of a 2D table of char
- * @param move A move
- * @return HALMA_GAME_MOVE_POSSIBLE if a move is possible, otherwise a macro HALMA_GAME_MOVE_IMPOSSIBLE_*
  */
-signed char halma_game_move_is_possible(const tab_2d_char* tab_2d, const halma_game_move* move);
+void halma_game_board_print_stream_without_grid(const tab_2d_char* tab_2d,const halma_game_players* players, FILE * stream);
+
+/**
+ * Print a Halma game board not in a grid to stdout.
+ * @param tab_2d A pointer of a 2D table of char
+ * @param players A table of Halma game players
+ */
+void halma_game_board_print_stdout_without_grid(const tab_2d_char* tab_2d,const halma_game_players* players);
 
 
 #endif

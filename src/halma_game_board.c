@@ -23,6 +23,7 @@
 
 bool halma_game_board_fill_for_new_party(halma_game_board* board, const halma_game_players* players)
 {
+	printf("Menu:\n \tn or next : To move.\n\tnew       : To start a new game.\n\tq or quit : To excit the game.\n\tp or print: To display the game board.\n");
   if(!tab_2d_char_is_init(board) || !halma_game_players_is_init(players) ||
      board->nb_lines != 16 || board->nb_columns != 16 ||
      players->nb < 2 || players->nb > 4)
