@@ -1,36 +1,37 @@
 /**
+ * @section license License
+ * 
  * Copyright (C) 2014  Spanti Nicola (RyDroid) <rydroid_dev@yahoo.com>
- *
+ * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
+ * 
  * @author Spanti Nicola (RyDroid)
  */
 
-
-#include <string.h>
-#include <stdio.h>
-#include <ctype.h>
-#include <stdlib.h>
 
 #include "stdio_functions.h"
 #include "tab_2d_char_io.h"
 #include "tab_2d_char_file.h"
 #include "halma_game_board.h"
 
+
 #define USER_ANSWER_LENGTH_MAX 255
 
 
+/**
+ * Print Print memo of commands.
+ */
 void print_help()
 {
   printf("h|help -- Print memo of commands.\n");
@@ -286,7 +287,10 @@ int main(int argc, char* argv[])
 	}
       else if(string_equals(user_answer, "p") || string_equals(user_answer, "print") || string_equals(user_answer, "display"))
 	{
+	  if(tab_2d_char_is_init(&game_board))
 	    tab_2d_char_print_stdout_without_grid(&game_board);
+	  else
+	    fprintf(stderr, "There is no game board. :(\nYou can create or load one.\n");
 	}
       else if(string_equals(user_answer, "nb_turns"))
 	{
