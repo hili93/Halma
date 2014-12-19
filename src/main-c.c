@@ -2,20 +2,20 @@
  * @section license License
  * 
  * Copyright (C) 2014  Spanti Nicola (RyDroid) <rydroid_dev@yahoo.com>
- *
+ * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
+ * 
  * @author Spanti Nicola (RyDroid)
  */
 
@@ -24,9 +24,9 @@
 
 #include "stdio_functions.h"
 #include "tab_2d_char_io.h"
-#include "tab_2d_char_file.h"
-#include "halma_game_board.h"
 #include "halma_game_player_move.h"
+#include "halma_game_board.h"
+#include "halma_game_board_print.h"
 
 
 #define USER_ANSWER_LENGTH_MAX 255
@@ -73,7 +73,7 @@ bool ask_load_game_board(tab_2d_char* game_board)
   fgets(file_path, 2000, stdin);
   if(isspace(file_path[strlen(file_path)-1]) || iscntrl(file_path[strlen(file_path)-1]))
     file_path[strlen(file_path)-1] = '\0';
-    
+  
   if(strlen(file_path) == 0)
     tab_2d_char_scan_stdin(game_board);
   else
@@ -117,7 +117,7 @@ int main(int argc, char* argv[])
   scanf("%u", &number_of_columns);
   
   tab_2d_char game_board = tab_2d_char_create(number_of_lines, number_of_columns);
-  tab_2d_char_print_stdout_without_grid(&square);
+  halma_game_print_stdout_without_grid(&square,players);
   TODO Generate randomly*/
   
   puts("A free/libre Halma game");
@@ -272,7 +272,7 @@ int main(int argc, char* argv[])
 			      if(halma_is_there_at_least_one_mark(&game_board))
 				{
 				  printf("Possible moves are marked with '%c'\n", HALMA_GAME_CELL_MARK);
-				  tab_2d_char_print_stdout_without_grid(&game_board);
+				  halma_game_board_print_stdout_without_grid(&game_board, &players);
 				  puts("Choose a destination cell:");
 				  line_mark = ask_uint_tirelessly("* Line: ", NULL);
 				  column_mark = ask_uint_tirelessly("* Column: ", NULL);
@@ -328,8 +328,16 @@ int main(int argc, char* argv[])
 		      printf("Move [%u, %u] to [%u, %u].\n", line_pawn, column_pawn, line_mark, column_mark);
 		    }
 		}
-	      ++nb_turns;
 	      
+	      ++nb_turns;
+	  if(halma_game_end(&game_board,&players)){
+	    for(size_t i=0;i<players.nb;++i){
+	      if(players.tab[i].score == 12){
+				printf("\nPlayer %s won the game with %u moves!\n",players.tab[i].name,nb_turns);
+	      }
+	    }
+	    return EXIT_SUCCESS;
+	  }
 	      if(debug)
 		{
 		  char file_path[6 + 1 + nb_turns / 1];
@@ -352,7 +360,7 @@ int main(int argc, char* argv[])
       else if(string_equals(user_answer, "p") || string_equals(user_answer, "print") || string_equals(user_answer, "display"))
 	{
 	  if(tab_2d_char_is_init(&game_board))
-	    tab_2d_char_print_stdout_without_grid(&game_board);
+	    halma_game_board_print_stdout_without_grid(&game_board, &players);
 	  else
 	    fprintf(stderr, "There is no game board. :(\nYou can create or load one.\n");
 	}

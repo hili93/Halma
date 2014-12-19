@@ -24,6 +24,7 @@
 #define HALMA_GAME_PLAYER_H
 
 
+#include "bool.h"
 #include "string_functions.h"
 #include "halma_game_move.h"
 
@@ -58,6 +59,12 @@ struct halma_game_player
    * A function for a player to choose a move.
    */
   halma_game_player_choose_move choose_move;
+  
+  /**
+   * The score of each player of Halma game.
+   * It is between 0 and 13.
+   */
+  char score;
 };
 
 
