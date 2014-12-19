@@ -20,6 +20,8 @@
  */
 
 
+#include <time.h> /* srand rand time */
+
 #include "stdio_functions.h"
 #include "tab_2d_char_io.h"
 #include "tab_2d_char_file.h"
@@ -126,6 +128,7 @@ int main(int argc, char* argv[])
   halma_game_players players = halma_game_players_create(0);
   char user_answer[USER_ANSWER_LENGTH_MAX] = "";
   unsigned int nb_turns = 0;
+  srand(time(NULL));
   
   while(true)
     {
@@ -244,54 +247,85 @@ int main(int argc, char* argv[])
 		      players.tab[i].choose_move(&players.tab[i], &game_board, &move);
 		      }*/
 		  
-		  
-		  unsigned int line_pawn, column_pawn, line_mark, column_mark;
-		  bool moved = false;
-		  while(!moved)
+
+		  if(players.tab[i].choose_move == halma_game_player_ask_move)
 		    {
-		      puts("Choose a pawn to move:");
-		      line_pawn = ask_uint_tirelessly("* Line: ", NULL);
-		      column_pawn = ask_uint_tirelessly("* Column: ", NULL);
+		      unsigned int line_pawn, column_pawn, line_mark, column_mark;
+		      bool moved = false;
+		      while(!moved)
+			{
+			  puts("Choose a pawn to move:");
+			  line_pawn = ask_uint_tirelessly("* Line: ", NULL);
+			  column_pawn = ask_uint_tirelessly("* Column: ", NULL);
 		      
-		      if(!halma_is_pawn(&game_board, line_pawn, column_pawn))
-			{
-			  fprintf(stderr, "The [%u, %u] is not a pawn.\n", line_pawn, column_pawn);
-			}
-		      else if(tab_2d_char_get_element_value(&game_board, line_pawn, column_pawn) != players.tab[i].char_pawn)
-			{
-			  fprintf(stderr, "The [%u, %u] is not one of your pawns.\n", line_pawn, column_pawn);
-			}
-		      else
-			{
-			  halma_mark_possible_moves_of_a_cell(&game_board, line_pawn, column_pawn);
-			  if(halma_is_there_at_least_one_mark(&game_board))
+			  if(!halma_is_pawn(&game_board, line_pawn, column_pawn))
 			    {
-			      printf("Possible moves are marked with '%c'\n", HALMA_GAME_CELL_MARK);
-			      tab_2d_char_print_stdout_without_grid(&game_board);
-			      puts("Choose a destination cell:");
-			      line_mark = ask_uint_tirelessly("* Line: ", NULL);
-			      column_mark = ask_uint_tirelessly("* Column: ", NULL);
-			  
-			      if(halma_pawn_move(&game_board, line_pawn, column_pawn, line_mark, column_mark))
-				{
-				  moved = true;
-				}
-			      else
-				{
-				  if(tab_2d_char_element_exists(&game_board, line_mark, column_mark))
-				    fprintf(stderr, "The move did not succeed.\n");
-				  else
-				    fprintf(stderr, "The cell [%u, %u] does not exist.\n", line_mark, column_mark);
-				}
+			      fprintf(stderr, "The [%u, %u] is not a pawn.\n", line_pawn, column_pawn);
+			    }
+			  else if(tab_2d_char_get_element_value(&game_board, line_pawn, column_pawn) != players.tab[i].char_pawn)
+			    {
+			      fprintf(stderr, "The [%u, %u] is not one of your pawns.\n", line_pawn, column_pawn);
 			    }
 			  else
 			    {
-			      if(tab_2d_char_element_exists(&game_board, line_pawn, column_pawn))
-				fprintf(stderr, "The pawn [%u, %u] can not move.\n", line_pawn, column_pawn);
+			      halma_mark_possible_moves_of_a_cell(&game_board, line_pawn, column_pawn);
+			      if(halma_is_there_at_least_one_mark(&game_board))
+				{
+				  printf("Possible moves are marked with '%c'\n", HALMA_GAME_CELL_MARK);
+				  tab_2d_char_print_stdout_without_grid(&game_board);
+				  puts("Choose a destination cell:");
+				  line_mark = ask_uint_tirelessly("* Line: ", NULL);
+				  column_mark = ask_uint_tirelessly("* Column: ", NULL);
+			  
+				  if(halma_pawn_move(&game_board, line_pawn, column_pawn, line_mark, column_mark))
+				    {
+				      moved = true;
+				    }
+				  else
+				    {
+				      if(tab_2d_char_element_exists(&game_board, line_mark, column_mark))
+					fprintf(stderr, "The move did not succeed.\n");
+				      else
+					fprintf(stderr, "The cell [%u, %u] does not exist.\n", line_mark, column_mark);
+				    }
+				}
 			      else
-				fprintf(stderr, "The cell [%u, %u] does not exist.\n", line_pawn, column_pawn);
+				{
+				  if(tab_2d_char_element_exists(&game_board, line_pawn, column_pawn))
+				    fprintf(stderr, "The pawn [%u, %u] can not move.\n", line_pawn, column_pawn);
+				  else
+				    fprintf(stderr, "The cell [%u, %u] does not exist.\n", line_pawn, column_pawn);
+				}
 			    }
 			}
+		    }
+		  else
+		    {
+		      unsigned int line_pawn, column_pawn, line_mark, column_mark;
+		      bool moved = false;
+
+		      while(!moved)
+			{
+			  line_pawn = (unsigned int) rand() % game_board.nb_lines;
+			  column_pawn = (unsigned int) rand() % game_board.nb_columns;
+			  
+			  if(halma_is_pawn(&game_board, line_pawn, column_pawn) && tab_2d_char_get_element_value(&game_board, line_pawn, column_pawn) == players.tab[i].char_pawn)
+			    {
+			      halma_mark_possible_moves_of_a_cell(&game_board, line_pawn, column_pawn);
+			      if(halma_is_there_at_least_one_mark(&game_board))
+				{
+				  line_mark = (unsigned int) rand() % game_board.nb_lines;
+				  column_mark = (unsigned int) rand() % game_board.nb_columns;
+				  
+				  if(halma_pawn_move(&game_board, line_pawn, column_pawn, line_mark, column_mark))
+				    {
+				      moved = true;
+				    }
+				}
+			    }
+			}
+
+		      printf("Move [%u, %u] to [%u, %u].\n", line_pawn, column_pawn, line_mark, column_mark);
 		    }
 		}
 	      ++nb_turns;
