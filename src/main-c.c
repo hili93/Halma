@@ -69,7 +69,7 @@ bool ask_load_game_board(tab_2d_char* game_board)
   fgets(file_path, 2000, stdin);
   if(isspace(file_path[strlen(file_path)-1]) || iscntrl(file_path[strlen(file_path)-1]))
     file_path[strlen(file_path)-1] = '\0';
-    
+  
   if(strlen(file_path) == 0)
     tab_2d_char_scan_stdin(game_board);
   else
@@ -233,7 +233,7 @@ int main(int argc, char* argv[])
 		      if(halma_is_there_at_least_one_mark(&game_board))
 			{
 			  printf("Possible moves are marked with '%c'\n", HALMA_GAME_CELL_MARK);
-			  halma_game_print_stdout_without_grid(&game_board, &players);
+			  halma_game_board_print_stdout_without_grid(&game_board, &players);
 			  puts("Choose a destination cell:");
 			  line_mark = ask_uint_tirelessly("* Line: ", NULL);
 			  column_mark = ask_uint_tirelessly("* Column: ", NULL);
@@ -286,7 +286,7 @@ int main(int argc, char* argv[])
 	}
       else if(string_equals(user_answer, "p") || string_equals(user_answer, "print") || string_equals(user_answer, "display"))
 	{
-	    halma_game_print_stdout_without_grid(&game_board,&players);
+	    halma_game_board_print_stdout_without_grid(&game_board, &players);
 	}
       else if(string_equals(user_answer, "nb_turns"))
 	{

@@ -41,7 +41,7 @@ $(BIN_DIR)/$(PACKAGE)-text: $(BIN_DIR)/stdio_functions.o $(BIN_DIR)/string_funct
 		$(BIN_DIR)/main-c.o \
 		-o $(BIN_DIR)/$(PACKAGE)-text
 
-$(BIN_DIR)/main-c.o: $(SRC_DIR)/stdio_functions.h $(SRC_DIR)/tab_2d_char_io.h  $(SRC_DIR)/tab_2d_char_file.h $(SRC_DIR)/halma_game_essential.h $(SRC_DIR)/main-c.c
+$(BIN_DIR)/main-c.o: $(SRC_DIR)/stdio_functions.h $(SRC_DIR)/tab_2d_char_io.h  $(SRC_DIR)/tab_2d_char_file.h $(SRC_DIR)/halma_game_board.h $(SRC_DIR)/halma_game_board_print.h $(SRC_DIR)/main-c.c
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/main-c.c -o $(BIN_DIR)/main-c.o
 
 $(BIN_DIR)/halma_game_board_print.o: $(SRC_DIR)/tab_2d_char_essential.h $(SRC_DIR)/halma_game_players.h $(SRC_DIR)/halma_game_board_print.h $(SRC_DIR)/halma_game_board_print.c
