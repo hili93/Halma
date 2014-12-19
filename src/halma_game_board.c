@@ -137,7 +137,7 @@ bool halma_game_score_is_init(const halma_game_players* players){
 
     /**********************************************************************/
     /* Case pawn nb1 wins*/
-    players->tab[0].score = 11;
+    players->tab[0].score = 0;
     for(size_t line=14, column;line < 16; ++line){
       for(column=12; column < 16; ++column){		
 	if(tab_2d_char_get_element_value_unsafe(board, line, column) == players->tab[0].char_pawn){
