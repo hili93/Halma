@@ -42,5 +42,26 @@ bool halma_game_board_fill_for_new_party(halma_game_board* board, const halma_ga
 bool halma_game_board_construct_for_new_party(halma_game_board* board, const halma_game_players* players);
 // The name contains 'construct', not 'init', because there is no parameter nb_lines and nb_columns.
 
+/**
+	* It initialise the score of all Halma game players.
+	* @param players Players of a Halma game.
+	*
+	*/
+void halma_game_score_init(const halma_game_players* players);
+/**
+	* Checks if the players score is initialized.
+	* @param players Players of a Halma game.
+	* @return True if the scores are initialized, otherwise false.
+	*/
+bool halma_game_score_is_init(const halma_game_players* players);
+
+/**
+	* See if the a player has won the game.
+	* @param players Players of a Halma game.
+	* @return true if the game ends, false if the game isn't finished yet.
+	*/
+bool halma_game_end(halma_game_board* board,const halma_game_players* players);
+
+
 
 #endif

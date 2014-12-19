@@ -36,6 +36,12 @@ struct halma_game_player
    * It must not be an empty or a mark character.
    */
   char char_pawn;
+	
+	/**
+		* The score of each player of Halma game.
+		* It is between 0 and 13.
+		*/
+	char score;
 };
 
 

@@ -32,9 +32,14 @@ void halma_game_board_print_stream_without_grid(const tab_2d_char* tab_2d,const 
 #elif defined(_WIN32)
   system("cls");
 #endif
-  
+  halma_game_end(tab_2d,players);
   printf("--------------------------------------------------\n\t\t\tMenu:\n--------------------------------------------------\n\tn or next : To move.\n\tnew       : To start a new game.\n\tq or quit : To exit the game.\n\tp or print: To display the game board.\n--------------------------------------------------\n");
-  
+  printf("Scores:\n Player -%s-:%d\n",players->tab[0].name,players->tab[0].score);
+	printf(" Player -%s-:%d\n",players->tab[1].name,players->tab[1].score);
+	printf(" Player -%s-:%d\n",players->tab[2].name,players->tab[2].score);
+	if(players->nb !=3){
+		printf(" Player -%s-:%d\n",players->tab[3].name,players->tab[3].score);
+	}
   if(tab_2d != NULL && tab_2d->tab != NULL)
     {
       for(size_t line=0, column; line < tab_2d->nb_lines; ++line)

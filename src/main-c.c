@@ -264,7 +264,14 @@ int main(int argc, char* argv[])
 		    }
 		}
 	      ++nb_turns;
-	      
+	  if(halma_game_end(&game_board,&players)){
+	    for(size_t i=0;i<players.nb;++i){
+	      if(players.tab[i].score == 12){
+				printf("\nPlayer %s won the game with %u moves!\n",players.tab[i].name,nb_turns);
+	      }
+	    }
+	    return EXIT_SUCCESS;
+	  }
 	      if(debug)
 		{
 		  char file_path[6 + 1 + nb_turns / 1];
