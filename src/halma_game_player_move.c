@@ -50,7 +50,8 @@ void halma_game_player_ask_move(const halma_game_player* player, const tab_2d_ch
       
       if(halma_is_pawn(tab_2d, move->first.line, move->first.column))
 	{
-	  tab_2d_char tab_2d_tmp = tab_2d_char_get_copy(tab_2d);
+	  tab_2d_char tab_2d_tmp = tab_2d_char_create(tab_2d->nb_lines, tab_2d->nb_columns);
+	  tab_2d_char_copy(&tab_2d_tmp, tab_2d);
 	  halma_mark_possible_moves_of_a_cell(&tab_2d_tmp, move->first.line, move->first.column);
 	  if(halma_is_there_at_least_one_mark(&tab_2d_tmp))
 	    {

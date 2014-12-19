@@ -1,13 +1,20 @@
 /**
- * @file
- * 
  * @section license License
  * 
- * License Creative Commons 0 (like the public domain)
- * Use, study, hack and share!
- * Even if I do not force you with copyleft to respect freedom of others, please do it.
- * For more informations : http://www.gnu.org/philosophy/free-sw.html
- * This program is provided with no warranty.
+ * Copyright (C) 2014  Spanti Nicola (RyDroid) <rydroid_dev@yahoo.com>
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 
@@ -54,14 +61,20 @@ bool halma_game_player_is_init(const halma_game_player* player)
 {
   return
     halma_game_player_has_a_name(player) &&
-    halma_game_player_is_possible_char_pawn(player->char_pawn);
+    halma_game_player_is_possible_char_pawn(player->char_pawn) &&
+    player->choose_move != NULL;
 }
 
-bool halma_game_player_init(halma_game_player* player, const char* name, char pawn_char)
+bool halma_game_player_init(halma_game_player* player, const char* name, char pawn_char, halma_game_player_choose_move choose_move)
 {
+  if(player == NULL)
+    return false;
+  
+  player->choose_move = choose_move;
   return
     halma_game_player_set_name(player, name) &&
-    halma_game_player_set_char_pawn(player, pawn_char);
+    halma_game_player_set_char_pawn(player, pawn_char) &&
+    player->choose_move != NULL;
 }
 
 void halma_game_player_destruct(halma_game_player* player)
