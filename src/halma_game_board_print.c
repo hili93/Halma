@@ -27,6 +27,8 @@
 
 void halma_game_board_print_stream_without_grid(const tab_2d_char* tab_2d,const halma_game_players* players, FILE * stream)
 {
+  /* TODO this funnction should only print the board: clear/cls and scores should not be here. */
+  
 #if defined(__unix__) || defined(__unix) || (defined(__APPLE__) && defined(__MACH__))
   system("clear");
 #elif defined(_WIN32)
@@ -36,30 +38,29 @@ void halma_game_board_print_stream_without_grid(const tab_2d_char* tab_2d,const 
   
   printf("--------------------------------------------------\n\t\t\tMenu:\n--------------------------------------------------\n\tn or next : To move.\n\tnew       : To start a new game.\n\tq or quit : To exit the game.\n\tp or print: To display the game board.\n--------------------------------------------------\n");
   
-  printf("Scores:\n Player -%s-:%d\n",players->tab[0].name,players->tab[0].score);
-  printf(" Player -%s-:%d\n",players->tab[1].name,players->tab[1].score);
-  printf(" Player -%s-:%d\n",players->tab[2].name,players->tab[2].score);
+  puts("Scores:");
+  for(signed char i=0; i < players->nb; ++i)
+    {
+      printf("* Player %hhu '%s': %u\n",
+	     i,
+	     players->tab[i].name,
+	     players->tab[i].score
+	     );
+    }
   
-  if(players->nb !=3){
-    printf(" Player -%s-:%d\n",players->tab[3].name,players->tab[3].score);
-  }
   printf("--------------------------------------------------\n");
   printf("   ");
-  for(int i=0;i<10;i++){
-    printf("%d  ",i);
-  }
-  for(int i=10;i<16;i++){
-    printf("%d ",i);
-  }
-  printf("\n");
-  if(tab_2d != NULL && tab_2d->tab != NULL)
+  for(unsigned int i=0; i < tab_2d->nb_columns; ++i)
     {
-      for(size_t line=0, column; line < tab_2d->nb_lines; ++line)
+      printf("%2u ", i);
+    }
+  puts("");
+  
+  if(tab_2d_char_is_init(tab_2d))
+    {
+      for(unsigned int line=0, column; line < tab_2d->nb_lines; ++line)
 	{
-	  if(line<10)
-	    printf("%u  ",line);
-	  else if(line>=10)
-	    printf("%d ",line);
+	  printf("%2u  ", line);
 
 	  for(column=0; column < tab_2d->nb_columns; ++column)
 	    {
@@ -67,56 +68,51 @@ void halma_game_board_print_stream_without_grid(const tab_2d_char* tab_2d,const 
 		{
 		  fprint_color(stream, "31");
 		  fputc(tab_2d_char_get_element_value_unsafe(tab_2d, line, column), stream);
-		  fputc(32,stream);
-		  fputc(32,stream);
+		  fputc(32, stream);
+		  fputc(32, stream);
 		  fprint_color(stream, "0");
 		}
 	      else if(tab_2d_char_get_element_value_unsafe(tab_2d, line, column) == players->tab[1].char_pawn)
 		{
 		  fprint_color(stream, "32");
 		  fputc(tab_2d_char_get_element_value_unsafe(tab_2d, line, column), stream);
-		  fputc(32,stream);
-		  fputc(32,stream);
+		  fputc(32, stream);
+		  fputc(32, stream);
 		  fprint_color(stream, "0");
 		}
 	      else if(tab_2d_char_get_element_value_unsafe(tab_2d, line, column) == players->tab[2].char_pawn)
 		{
 		  fprint_color(stream, "34");
 		  fputc(tab_2d_char_get_element_value_unsafe(tab_2d, line, column), stream);
-		  fputc(32,stream);
-		  fputc(32,stream);
+		  fputc(32, stream);
+		  fputc(32, stream);
 		  fprint_color(stream, "0");
 		}
 	      else if(players->nb != 3 && tab_2d_char_get_element_value_unsafe(tab_2d, line, column) == players->tab[3].char_pawn)
 		{
 		  fprint_color(stream, "35");
 		  fputc(tab_2d_char_get_element_value_unsafe(tab_2d, line, column), stream);
-		  fputc(32,stream);
-		  fputc(32,stream);		  
+		  fputc(32, stream);
+		  fputc(32, stream);
 		  fprint_color(stream, "0");
 		}
 	      else
 		{
 		  fputc(tab_2d_char_get_element_value_unsafe(tab_2d, line, column), stream);
-		  fputc(32,stream);
-		  fputc(32,stream);
+		  fputc(32, stream);
+		  fputc(32, stream);
 		}
 	    }
-	  if(line<10)
-	    printf("%u  ",line);
-	  else if(line>=10)
-	    printf("%d ",line);
+	  printf("%2u  ", line);
 
 	  fprintf(stream, "\n");
 	}
       printf("   ");
-      for(int i=0;i<10;i++){
-	printf("%d  ",i);
-      }
-      for(int i=10;i<16;i++){
-	printf("%d ",i);
-      }
-      printf("\n");
+      for(unsigned int i=0; i < tab_2d->nb_columns; ++i)
+	{
+	  printf("%2u ", i);
+	}
+      puts("");
     }
 }
 

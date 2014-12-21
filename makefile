@@ -18,7 +18,7 @@ SRC_DIR=src
 BIN_DIR=bin
 DOC_DIR=doc
 
-CC=clang
+CC=gcc
 INCLUDES=-I./$(SRC_DIR)
 DEBUG_FLAGS=-O0 -g
 CFLAGS=-std=c99 -Wall -Wextra -O2 $(INCLUDES) $(DEBUG_FLAGS) -fPIC
@@ -124,7 +124,7 @@ $(DOC_DIR): $(SRC_DIR)/*.h doxygen_configuration.ini README.md
 	@mkdir -p $(DOC_DIR)/
 	doxygen doxygen_configuration.ini
 	# PDF with LaTeX
-	cd $(DOC_DIR)/latex/ && make
+	#cd $(DOC_DIR)/latex/ && make
 
 
 archives: zip tar-gz tar-bz2

@@ -56,12 +56,11 @@ bool halma_game_score_is_init(const halma_game_players* players);
 
 /**
  * See if the a player has won the game.
- * @param tab_2d_char
+ * @param board A board Halma game
  * @param players Players of a Halma game.
- * @return true if the game ends, false if the game isn't finished yet.
+ * @return True if the game ends, false if the game isn't finished yet.
  */
-bool halma_game_end(const tab_2d_char* board, const halma_game_players* players);
-
+bool halma_game_end(const halma_game_board* board, const halma_game_players* players);
 
 
 #endif

@@ -32,18 +32,18 @@
 
 /**
  * Print a Halma game board not in a grid to a stream.
- * @param stream A stream
- * @param players A table of Halma game players
  * @param tab_2d A pointer of a 2D table of char
+ * @param players A table of Halma game players
+ * @param stream A stream
  */
-void halma_game_board_print_stream_without_grid(const tab_2d_char* tab_2d,const halma_game_players* players, FILE * stream);
+void halma_game_board_print_stream_without_grid(const tab_2d_char* tab_2d, const halma_game_players* players, FILE * stream);
 
 /**
  * Print a Halma game board not in a grid to stdout.
  * @param tab_2d A pointer of a 2D table of char
  * @param players A table of Halma game players
  */
-void halma_game_board_print_stdout_without_grid(const tab_2d_char* tab_2d,const halma_game_players* players);
+void halma_game_board_print_stdout_without_grid(const tab_2d_char* tab_2d, const halma_game_players* players);
 
 
 #endif

@@ -64,7 +64,7 @@ struct halma_game_player
    * The score of each player of Halma game.
    * It is between 0 and 13.
    */
-  char score;
+  unsigned char score;
 };
 
 
