@@ -33,15 +33,16 @@ FILES_TO_ARCHIVE=$(SRC_DIR)/ makefile doxygen_configuration.ini LICENSE* README*
 all: $(BIN_DIR)/$(PACKAGE)-text $(BIN_DIR)/libtab2dchar.a $(BIN_DIR)/libtab2dchar.so doc tar-bz2
 
 
-$(BIN_DIR)/$(PACKAGE)-text: $(BIN_DIR)/stdio_functions.o $(BIN_DIR)/string_functions.o $(BIN_DIR)/tab_2d_char_essential.o $(BIN_DIR)/tab_2d_char_print.o $(BIN_DIR)/tab_2d_char_scan.o $(BIN_DIR)/tab_2d_char_file.o $(BIN_DIR)/halma_game_essential.o $(BIN_DIR)/tab_2d_char_fill_zone.o $(BIN_DIR)/halma_game_player.o $(BIN_DIR)/halma_game_players.o $(BIN_DIR)/halma_game_board.o $(BIN_DIR)/halma_game_board_print.o $(BIN_DIR)/main-c.o
+$(BIN_DIR)/$(PACKAGE)-text: $(BIN_DIR)/stdio_functions.o $(BIN_DIR)/string_functions.o $(BIN_DIR)/tab_2d_char_essential.o $(BIN_DIR)/tab_2d_char_print.o $(BIN_DIR)/tab_2d_char_scan.o $(BIN_DIR)/tab_2d_char_file.o $(BIN_DIR)/halma_game_essential.o $(BIN_DIR)/tab_2d_char_fill_zone.o $(BIN_DIR)/halma_game_move.o $(BIN_DIR)/halma_game_player.o $(BIN_DIR)/halma_game_player_move.o $(BIN_DIR)/halma_game_players.o $(BIN_DIR)/halma_game_board.o $(BIN_DIR)/halma_game_board_print.o $(BIN_DIR)/main-c.o
 	$(CC) $(CFLAGS) \
 		$(BIN_DIR)/stdio_functions.o $(BIN_DIR)/string_functions.o \
 		$(BIN_DIR)/tab_2d_char_essential.o $(BIN_DIR)/tab_2d_char_fill_zone.o $(BIN_DIR)/tab_2d_char_print.o $(BIN_DIR)/tab_2d_char_scan.o $(BIN_DIR)/tab_2d_char_file.o \
-		$(BIN_DIR)/halma_game_essential.o $(BIN_DIR)/halma_game_player.o $(BIN_DIR)/halma_game_players.o $(BIN_DIR)/halma_game_board.o $(BIN_DIR)/halma_game_board_print.o \
+		$(BIN_DIR)/halma_game_essential.o $(BIN_DIR)/halma_game_move.o \
+		$(BIN_DIR)/halma_game_player.o $(BIN_DIR)/halma_game_player_move.o $(BIN_DIR)/halma_game_players.o $(BIN_DIR)/halma_game_board.o $(BIN_DIR)/halma_game_board_print.o \
 		$(BIN_DIR)/main-c.o \
 		-o $(BIN_DIR)/$(PACKAGE)-text
 
-$(BIN_DIR)/main-c.o: $(SRC_DIR)/stdio_functions.h $(SRC_DIR)/tab_2d_char_io.h  $(SRC_DIR)/tab_2d_char_file.h $(SRC_DIR)/halma_game_board.h $(SRC_DIR)/halma_game_board_print.h $(SRC_DIR)/main-c.c
+$(BIN_DIR)/main-c.o: $(SRC_DIR)/stdio_functions.h $(SRC_DIR)/tab_2d_char_io.h  $(SRC_DIR)/tab_2d_char_file.h $(SRC_DIR)/halma_game_essential.h $(SRC_DIR)/main-c.c
 	@mkdir -p $(BIN_DIR)/
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/main-c.c -o $(BIN_DIR)/main-c.o
 
@@ -57,31 +58,50 @@ $(BIN_DIR)/halma_game_players.o: $(SRC_DIR)/halma_game_player.h $(SRC_DIR)/halma
 	@mkdir -p $(BIN_DIR)/
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/halma_game_players.c -o $(BIN_DIR)/halma_game_players.o
 
-$(BIN_DIR)/halma_game_player.o: $(SRC_DIR)/bool.h $(SRC_DIR)/string_functions.h $(SRC_DIR)/halma_game_player.h $(SRC_DIR)/halma_game_player.c
+$(BIN_DIR)/halma_game_player_move.o: $(SRC_DIR)/stdio_functions.h $(SRC_DIR)/halma_game_player.h $(SRC_DIR)/halma_game_player_move.h $(SRC_DIR)/halma_game_player_move.c
+	@mkdir -p $(BIN_DIR)/
+	$(CC) $(CFLAGS) -c $(SRC_DIR)/halma_game_player_move.c -o $(BIN_DIR)/halma_game_player_move.o
+
+$(BIN_DIR)/halma_game_player.o: $(SRC_DIR)/string_functions.h $(SRC_DIR)/position_2d_uint_pair.h $(SRC_DIR)/halma_game_player.h $(SRC_DIR)/halma_game_player.c
 	@mkdir -p $(BIN_DIR)/
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/halma_game_player.c -o $(BIN_DIR)/halma_game_player.o
 
-$(BIN_DIR)/halma_game_essential.o: $(SRC_DIR)/tab_2d_char_print.h $(SRC_DIR)/halma_game_essential.h $(SRC_DIR)/halma_game_essential.c
+$(BIN_DIR)/halma_game_move.o: $(SRC_DIR)/position_2d_uint_pair.h $(SRC_DIR)/halma_game_move.h $(SRC_DIR)/halma_game_move.c
 	@mkdir -p $(BIN_DIR)/
+	$(CC) $(CFLAGS) -c $(SRC_DIR)/halma_game_move.c -o $(BIN_DIR)/halma_game_move.o
+
+$(BIN_DIR)/halma_game_essential.o: $(SRC_DIR)/tab_2d_char_print.h $(SRC_DIR)/halma_game_essential.h $(SRC_DIR)/halma_game_essential.c
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/halma_game_essential.c -o $(BIN_DIR)/halma_game_essential.o
 
-$(BIN_DIR)/libtab2dchar.so: $(BIN_DIR)/string_functions.o $(BIN_DIR)/stdio_functions.o $(BIN_DIR)/tab_2d_char_essential.o $(BIN_DIR)/tab_2d_char_fill_zone.o  $(BIN_DIR)/tab_2d_char_scan.o $(BIN_DIR)/tab_2d_char_print.o $(BIN_DIR)/tab_2d_char_file.o
-	$(CC) -o $(BIN_DIR)/string_functions.o $(BIN_DIR)/stdio_functions.o $(BIN_DIR)/libtab2dchar.so -shared $(BIN_DIR)/tab_2d_char_*.o
+$(BIN_DIR)/tab_dynamic_position_2d_uint.o: $(SRC_DIR)/position_2d_uint.h $(SRC_DIR)/tab_dynamic_position_2d_uint.h $(SRC_DIR)/tab_dynamic_position_2d_uint.c
+	@mkdir -p $(BIN_DIR)/
+	$(CC) $(CFLAGS) -c $(SRC_DIR)/tab_dynamic_position_2d_uint.c -o $(BIN_DIR)/tab_dynamic_position_2d_uint.o
 
-$(BIN_DIR)/libtab2dchar.a: $(BIN_DIR)/string_functions.o $(BIN_DIR)/stdio_functions.o $(BIN_DIR)/tab_2d_char_essential.o $(BIN_DIR)/tab_2d_char_fill_zone.o  $(BIN_DIR)/tab_2d_char_scan.o $(BIN_DIR)/tab_2d_char_print.o $(BIN_DIR)/tab_2d_char_file.o
-	ar -rv $(BIN_DIR)/string_functions.o $(BIN_DIR)/stdio_functions.o $(BIN_DIR)/libtab2dchar.a $(BIN_DIR)/tab_2d_char_*.o
+$(BIN_DIR)/position_2d_uint_pair.o: $(SRC_DIR)/position_2d_uint.h $(SRC_DIR)/position_2d_uint_pair.h $(SRC_DIR)/position_2d_uint_pair.c
+	@mkdir -p $(BIN_DIR)/
+	$(CC) $(CFLAGS) -c $(SRC_DIR)/position_2d_uint_pair.c -o $(BIN_DIR)/position_2d_uint_pair.o
+
+$(BIN_DIR)/position_2d_uint.o: $(SRC_DIR)/bool.h $(SRC_DIR)/position_2d_uint.h $(SRC_DIR)/position_2d_uint.c
+	@mkdir -p $(BIN_DIR)/
+	$(CC) $(CFLAGS) -c $(SRC_DIR)/position_2d_uint.c -o $(BIN_DIR)/position_2d_uint.o
+
+$(BIN_DIR)/libtab2dchar.so: $(BIN_DIR)/string_functions.o $(BIN_DIR)/stdio_functions.o $(BIN_DIR)/tab_2d_char_essential.o $(BIN_DIR)/tab_2d_char_fill_zone.o $(BIN_DIR)/tab_2d_char_scan.o $(BIN_DIR)/tab_2d_char_print.o $(BIN_DIR)/tab_2d_char_file.o
+	$(CC) -o $(BIN_DIR)/libtab2dchar.so -shared $(BIN_DIR)/string_functions.o $(BIN_DIR)/stdio_functions.o $(BIN_DIR)/tab_2d_char_*.o
+
+$(BIN_DIR)/libtab2dchar.a: $(BIN_DIR)/string_functions.o $(BIN_DIR)/stdio_functions.o $(BIN_DIR)/tab_2d_char_essential.o $(BIN_DIR)/tab_2d_char_fill_zone.o $(BIN_DIR)/tab_2d_char_scan.o $(BIN_DIR)/tab_2d_char_print.o $(BIN_DIR)/tab_2d_char_file.o
+	ar -rv $(BIN_DIR)/libtab2dchar.a $(BIN_DIR)/string_functions.o $(BIN_DIR)/stdio_functions.o $(BIN_DIR)/tab_2d_char_*.o
 
 $(BIN_DIR)/tab_2d_char_file.o: $(SRC_DIR)/bool.h $(SRC_DIR)/tab_2d_char_print.h $(SRC_DIR)/tab_2d_char_file.h $(SRC_DIR)/tab_2d_char_file.c
 	@mkdir -p $(BIN_DIR)/
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/tab_2d_char_file.c -o $(BIN_DIR)/tab_2d_char_file.o
 
-$(BIN_DIR)/tab_2d_char_scan.o: $(SRC_DIR)/stdio_functions.h $(SRC_DIR)/tab_2d_char_essential.h $(SRC_DIR)/tab_2d_char_scan.h $(SRC_DIR)/tab_2d_char_scan.c
-	@mkdir -p $(BIN_DIR)/
-	$(CC) $(CFLAGS) -c $(SRC_DIR)/tab_2d_char_scan.c -o $(BIN_DIR)/tab_2d_char_scan.o
-
 $(BIN_DIR)/tab_2d_char_print.o: $(SRC_DIR)/tab_2d_char_essential.h $(SRC_DIR)/tab_2d_char_print.h $(SRC_DIR)/tab_2d_char_print.c
 	@mkdir -p $(BIN_DIR)/
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/tab_2d_char_print.c -o $(BIN_DIR)/tab_2d_char_print.o
+
+$(BIN_DIR)/tab_2d_char_scan.o: $(SRC_DIR)/stdio_functions.h $(SRC_DIR)/tab_2d_char_essential.h $(SRC_DIR)/tab_2d_char_scan.h $(SRC_DIR)/tab_2d_char_scan.c
+	@mkdir -p $(BIN_DIR)/
+	$(CC) $(CFLAGS) -c $(SRC_DIR)/tab_2d_char_scan.c -o $(BIN_DIR)/tab_2d_char_scan.o
 
 $(BIN_DIR)/tab_2d_char_fill_zone.o: $(SRC_DIR)/tab_2d_char_essential.h $(SRC_DIR)/tab_2d_char_fill_zone.h $(SRC_DIR)/tab_2d_char_fill_zone.c
 	@mkdir -p $(BIN_DIR)/
@@ -91,28 +111,20 @@ $(BIN_DIR)/tab_2d_char_essential.o: $(SRC_DIR)/bool.h $(SRC_DIR)/tab_2d_char_ess
 	@mkdir -p $(BIN_DIR)/
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/tab_2d_char_essential.c -o $(BIN_DIR)/tab_2d_char_essential.o
 
-$(BIN_DIR)/position_2d_uint_pair.o: $(SRC_DIR)/position_2d_uint.h $(SRC_DIR)/position_2d_uint_pair.h $(SRC_DIR)/position_2d_uint_pair.c
-	@mkdir -p $(BIN_DIR)/
-	$(CC) $(CFLAGS) -c $(SRC_DIR)/position_2d_uint_pair.c -o $(BIN_DIR)/position_2d_uint_pair.o
-
-$(BIN_DIR)/position_2d_uint.o: $(SRC_DIR)/position_2d_uint.h $(SRC_DIR)/position_2d_uint.c
-	@mkdir -p $(BIN_DIR)/
-	$(CC) $(CFLAGS) -c $(SRC_DIR)/position_2d_uint.c -o $(BIN_DIR)/position_2d_uint.o
-
-$(BIN_DIR)/string_functions.o: $(SRC_DIR)/string_functions.h $(SRC_DIR)/string_functions.c
-	@mkdir -p $(BIN_DIR)/
-	$(CC) $(CFLAGS) -c $(SRC_DIR)/string_functions.c -o $(BIN_DIR)/string_functions.o
-
-$(BIN_DIR)/stdio_functions.o: $(SRC_DIR)/stdio_functions.h $(SRC_DIR)/stdio_functions.c
+$(BIN_DIR)/stdio_functions.o: $(SRC_DIR)/string_functions.h $(SRC_DIR)/stdio_functions.h $(SRC_DIR)/stdio_functions.c
 	@mkdir -p $(BIN_DIR)/
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/stdio_functions.c -o $(BIN_DIR)/stdio_functions.o
 
+$(BIN_DIR)/string_functions.o: $(SRC_DIR)/bool.h $(SRC_DIR)/string_functions.h $(SRC_DIR)/string_functions.c
+	@mkdir -p $(BIN_DIR)/
+	$(CC) $(CFLAGS) -c $(SRC_DIR)/string_functions.c -o $(BIN_DIR)/string_functions.o
 
-$(DOC_DIR): $(SRC_DIR)/*.h $(SRC_DIR)/*.hh doxygen_configuration.ini README.md
+
+$(DOC_DIR): $(SRC_DIR)/*.h doxygen_configuration.ini README.md
 	@mkdir -p $(DOC_DIR)/
 	doxygen doxygen_configuration.ini
 	# PDF with LaTeX
-	cd $(DOC_DIR)/latex/ && make
+	#cd $(DOC_DIR)/latex/ && make
 
 
 archives: zip tar-gz tar-bz2

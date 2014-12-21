@@ -61,14 +61,20 @@ bool halma_game_player_is_init(const halma_game_player* player)
 {
   return
     halma_game_player_has_a_name(player) &&
-    halma_game_player_is_possible_char_pawn(player->char_pawn);
+    halma_game_player_is_possible_char_pawn(player->char_pawn) &&
+    player->choose_move != NULL;
 }
 
-bool halma_game_player_init(halma_game_player* player, const char* name, char pawn_char)
+bool halma_game_player_init(halma_game_player* player, const char* name, char pawn_char, halma_game_player_choose_move choose_move)
 {
+  if(player == NULL)
+    return false;
+  
+  player->choose_move = choose_move;
   return
     halma_game_player_set_name(player, name) &&
-    halma_game_player_set_char_pawn(player, pawn_char);
+    halma_game_player_set_char_pawn(player, pawn_char) &&
+    player->choose_move != NULL;
 }
 
 void halma_game_player_destruct(halma_game_player* player)

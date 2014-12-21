@@ -26,10 +26,18 @@
 
 #include "bool.h"
 #include "string_functions.h"
-#include "halma_game_essential.h"
+#include "halma_game_move.h"
 
 
 typedef struct halma_game_player halma_game_player;
+
+/**
+ * A function for a player to choose a move.
+ * @param[in]  player A Halma game player
+ * @param[in]  tab_2d A 2D table of characters
+ * @param[out] move A move to do
+ */
+typedef void (*halma_game_player_choose_move)(const halma_game_player* player, const tab_2d_char* tab_2d, halma_game_move* move);
 
 /**
  * A player of Halma game.
@@ -46,12 +54,17 @@ struct halma_game_player
    * It must not be an empty or a mark character.
    */
   char char_pawn;
-	
-	/**
-		* The score of each player of Halma game.
-		* It is between 0 and 13.
-		*/
-	char score;
+
+  /**
+   * A function for a player to choose a move.
+   */
+  halma_game_player_choose_move choose_move;
+  
+  /**
+   * The score of each player of Halma game.
+   * It is between 0 and 13.
+   */
+  unsigned char score;
 };
 
 
@@ -103,12 +116,13 @@ bool halma_game_player_is_init(const halma_game_player* player);
  * @param new_paw New pawn character of the player
  * @return True if the player is initialized, otherwise false
  */
-bool halma_game_player_init(halma_game_player* player, const char* name, char pawn_char);
+bool halma_game_player_init(halma_game_player* player, const char* name, char pawn_char, halma_game_player_choose_move choose_move);
 
 /**
  * Destruct a Halma game player (dynamic allocation, etc).
  * @param player A Halma game player
  */
 void halma_game_player_destruct(halma_game_player* player);
+
 
 #endif
